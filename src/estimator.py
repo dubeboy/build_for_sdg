@@ -65,9 +65,15 @@ def generate_severe_cases_by_request_time(impact_data, total_hospital_beds):
 
 
 # Challenge 3
+def generate_infections_by_request_time(impact_data, avg_daily_income_population, avg_daily_income_in_usd):
+    infections_by_requested_time = impact_data['infectionsByRequestedTime']
 
+    cases_for_ICU_by_requested_time = infections_by_requested_time * 0.05
+    cases_for_ventilators_by_requested_time = infections_by_requested_time * 0.02
 
-# def generate_infections_by_request_time():
+    dollars_in_flight = infections_by_requested_time * avg_daily_income_population * avg_daily_income_in_usd * 30
 
-
+    impact_data['casesForICUByRequestedTime'] = cases_for_ICU_by_requested_time
+    impact_data['casesForVentilatorsByRequestedTime'] = cases_for_ventilators_by_requested_time
+    impact_data['dollarsInFlight'] = round(dollars_in_flight, 2)
 
