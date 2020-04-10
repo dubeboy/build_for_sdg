@@ -4,7 +4,13 @@ import json
 
 
 def estimator(data):
-    data = {'data': data, 'impact': generate_impact(data, 10), 'severeImpact': generate_impact(data, 50)}
+    impact = generate_impact(data, 10)
+    generate_severe_cases_by_request_time(impact, data['totalHospitalBeds'])
+
+    severe_impact = generate_impact(data, 50)
+    generate_severe_cases_by_request_time(severe_impact, data['totalHospitalBeds'])
+
+    data = {'data': data, 'impact': impact, 'severeImpact': severe_impact}
     return data
 
 
@@ -45,3 +51,23 @@ def main():
 
 
 main()
+
+
+# Challenge two
+def generate_severe_cases_by_request_time(impact_data, total_hospital_beds):
+    infections_by_requested_time = impact_data['infectionsByRequestedTime']
+
+    bed_availability = total_hospital_beds * 0.35
+    severe_cases_by_request_time = infections_by_requested_time * 0.15
+
+    impact_data['severeCasesByRequestedTime'] = severe_cases_by_request_time
+    impact_data['hospitalBedsByRequestedTime'] = severe_cases_by_request_time - bed_availability
+
+
+# Challenge 3
+
+
+# def generate_infections_by_request_time():
+
+
+
