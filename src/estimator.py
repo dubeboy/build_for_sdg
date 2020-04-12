@@ -46,16 +46,12 @@ def generate_infections_by_request_time(impact_data,
                                         avg_daily_income_in_usd,
                                         period_type,
                                         time_to_elapse):
-    infections_by_requested_time = impact_data['infectionsByRequestedTime']
+    infections_by_requested_time = impact_data['severeCasesByRequestedTime']
 
     cases_for_ICU_by_requested_time = infections_by_requested_time * 0.05
     cases_for_ventilators_by_requested_time = infections_by_requested_time * 0.02
 
     days = get_days(period_type, time_to_elapse)
-
-    # added this because the document was no clear on whe
-    if avg_daily_income_population > 1:
-        avg_daily_income_population = avg_daily_income_population / 100
 
     dollars_in_flight = infections_by_requested_time * avg_daily_income_population * avg_daily_income_in_usd * days
 
@@ -74,4 +70,6 @@ def get_days(period_type, time_to_elapse):
         days = time_to_elapse
 
     return days
+
+
 
