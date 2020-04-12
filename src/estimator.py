@@ -22,7 +22,7 @@ def estimator(data):
 
 # Challenge one
 def generate_impact(data, multiplier, period_type, time_to_elapse):
-    currently_infected = int(data["reportedCases"]) * multiplier
+    currently_infected = data["reportedCases"] * multiplier
     days = get_days(period_type, time_to_elapse)
 
     factor = int(days / 3)
@@ -33,11 +33,11 @@ def generate_impact(data, multiplier, period_type, time_to_elapse):
 
 # Challenge two
 def generate_severe_cases_by_request_time(impact_data, total_hospital_beds):
-    severe_cases_by_request_time = int(impact_data['infectionsByRequestedTime'] * 0.15)
-    bed_availability = int(total_hospital_beds * 0.35)
+    severe_cases_by_request_time = impact_data['infectionsByRequestedTime'] * 0.15
+    bed_availability = total_hospital_beds * 0.35
 
-    impact_data['severeCasesByRequestedTime'] = severe_cases_by_request_time
-    impact_data['hospitalBedsByRequestedTime'] = bed_availability - severe_cases_by_request_time
+    impact_data['severeCasesByRequestedTime'] = int(severe_cases_by_request_time)
+    impact_data['hospitalBedsByRequestedTime'] = int(bed_availability - severe_cases_by_request_time)
 
 
 # Challenge 3
@@ -48,8 +48,8 @@ def generate_infections_by_request_time(impact_data,
                                         time_to_elapse):
     infections_by_requested_time = impact_data['infectionsByRequestedTime']
 
-    cases_for_ICU_by_requested_time = int(infections_by_requested_time * 0.05)
-    cases_for_ventilators_by_requested_time = int(infections_by_requested_time * 0.02)
+    cases_for_ICU_by_requested_time = infections_by_requested_time * 0.05
+    cases_for_ventilators_by_requested_time = infections_by_requested_time * 0.02
 
     days = get_days(period_type, time_to_elapse)
     dollars_in_flight = infections_by_requested_time * avg_daily_income_population * avg_daily_income_in_usd * days
