@@ -1,4 +1,3 @@
-import json
 
 
 def estimator(data):
@@ -76,25 +75,3 @@ def get_days(period_type, time_to_elapse):
 
     return days
 
-
-def main():
-    js = """
-      {
-    "region": {
-      "name": "Africa",
-      "avgAge": 19.7,
-      "avgDailyIncomeInUSD": 1.5,
-      "avgDailyIncomePopulation": 0.71
-    },
-    "periodType": "days",
-    "timeToElapse": 28,
-    "reportedCases": 50,
-    "population": 66622705,
-    "totalHospitalBeds": 1380614
-  }
-    """
-    js = json.loads(js)
-    print(estimator(js))
-
-
-main()
