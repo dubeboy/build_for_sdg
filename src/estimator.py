@@ -1,3 +1,4 @@
+import json
 
 
 def estimator(data):
@@ -9,7 +10,7 @@ def estimator(data):
     impact = generate_impact(data, 10, period_type, time_to_elapse)  # challenge 1
     generate_severe_cases_by_request_time(impact, data['totalHospitalBeds'])  # challenge 2
     generate_infections_by_request_time(impact, avg_daily_income_population,
-                                        avg_daily_income_in_usd,period_type, time_to_elapse)  # challenge 3
+                                        avg_daily_income_in_usd, period_type, time_to_elapse)  # challenge 3
 
     severe_impact = generate_impact(data, 50, period_type, time_to_elapse)  # challenge 1
     generate_severe_cases_by_request_time(severe_impact, data['totalHospitalBeds'])  # challenge 2
@@ -52,6 +53,11 @@ def generate_infections_by_request_time(impact_data,
     cases_for_ventilators_by_requested_time = infections_by_requested_time * 0.02
 
     days = get_days(period_type, time_to_elapse)
+
+    # added this because the document was no clear on whe
+    if avg_daily_income_population > 1:
+        avg_daily_income_population = avg_daily_income_population / 100
+
     dollars_in_flight = infections_by_requested_time * avg_daily_income_population * avg_daily_income_in_usd * days
 
     impact_data['casesForICUByRequestedTime'] = int(cases_for_ICU_by_requested_time)
@@ -70,3 +76,25 @@ def get_days(period_type, time_to_elapse):
 
     return days
 
+
+def main():
+    js = """
+      {
+    "region": {
+      "name": "Africa",
+      "avgAge": 19.7,
+      "avgDailyIncomeInUSD": 1.5,
+      "avgDailyIncomePopulation": 0.71
+    },
+    "periodType": "days",
+    "timeToElapse": 28,
+    "reportedCases": 50,
+    "population": 66622705,
+    "totalHospitalBeds": 1380614
+  }
+    """
+    js = json.loads(js)
+    print(estimator(js))
+
+
+main()
