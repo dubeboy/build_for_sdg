@@ -23,11 +23,13 @@ def estimator(data):
 
 # Challenge one
 def generate_impact(data, multiplier, period_type, time_to_elapse):
-    currentlyInfected = data["reportedCases"] * multiplier
+    currently_infected = int(data["reportedCases"]) * multiplier
     days = get_days(period_type, time_to_elapse)
 
-    return {'currentlyInfected': currentlyInfected,
-            'infectionsByRequestedTime': currentlyInfected * int(2 ** (days / 3))}
+    factor = int(days / 3)
+
+    return {'currentlyInfected': currently_infected,
+            'infectionsByRequestedTime': currently_infected * (2 ** factor)}
 
 
 # Challenge two
@@ -47,8 +49,8 @@ def generate_infections_by_request_time(impact_data,
                                         time_to_elapse):
     infections_by_requested_time = impact_data['infectionsByRequestedTime']
 
-    cases_for_ICU_by_requested_time = infections_by_requested_time * 0.05
-    cases_for_ventilators_by_requested_time = infections_by_requested_time * 0.02
+    cases_for_ICU_by_requested_time = int(infections_by_requested_time * 0.05)
+    cases_for_ventilators_by_requested_time = int(infections_by_requested_time * 0.02)
 
     days = get_days(period_type, time_to_elapse)
     dollars_in_flight = infections_by_requested_time * avg_daily_income_population * avg_daily_income_in_usd * days
@@ -68,3 +70,4 @@ def get_days(period_type, time_to_elapse):
         days = time_to_elapse
 
     return days
+
