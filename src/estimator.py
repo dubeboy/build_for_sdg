@@ -56,7 +56,7 @@ def generate_infections_by_request_time(impact_data,
 
     impact_data['casesForICUByRequestedTime'] = int(cases_for_ICU_by_requested_time)
     impact_data['casesForVentilatorsByRequestedTime'] = int(cases_for_ventilators_by_requested_time)
-    impact_data['dollarsInFlight'] = round(dollars_in_flight, 2)
+    impact_data['dollarsInFlight'] = int(dollars_in_flight)
 
 
 # Private methods
